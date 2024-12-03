@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cinfo</title>
+    <style>
+        .oneline{
+            display:inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Information</h1>
+    <p><%= customer %></p>
+    <h1><%= customer['fname'] %></h1>
+    <form action="./delchat" class="button oneline">
+        <button>Help</button>
+    </form>
+    <form action="./information" method="post" class="button oneline" >
+        <button>Delivered</button>
+    </form>
+    <form action="./delivery">
+        <button>Back</button>
+    </form>
+</body>
+</html>

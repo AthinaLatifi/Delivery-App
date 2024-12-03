@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>del_home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style> 
+         
+         body{
+          background-color: #a0b4fc;
+         }
+        .fa-headset {
+          font-size: 40px;
+          position: absolute;
+          top: 10px; 
+          right: 10px; 
+          width: 40px; 
+          height: auto;
+          color: black;
+        } 
+       
+        .list-group {
+            display: flex;
+            flex-direction: column; 
+            width: 100%; 
+            
+        }
+       
+        .list-group-item {
+            display: block;
+            width: 100%; 
+            margin-bottom: 5px; 
+            padding: 40px 10px;
+            font-size: 18px;
+            text-align: left; 
+            padding-left: 15px;
+            cursor: pointer;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1  style="color: red;">Delivery</h1>
+    <a href="http://localhost:1000/delchat" class="button">
+        <i class="fa-solid fa-headset"></i>
+    </a>
+    <a href="logout">
+        Logout
+    </a>
+    <form action="./information" class="list-group" method="get">
+      <% for (j=0; j<customers.length; j++) {%>
+          <div class="list-group-item list-group-item-action">
+            <a  href="./information?id=<%= customers[j]['_id'] %>" type="submit">
+              <h1>Address:</h1>
+              <h2><%= customers[j]['address'] %> , <%= customers[j]['city'] %> <%= customers[j]['postal'] %></h2>
+              <h3>Name:</h3>
+              <h3 id="name"><%= customers[j]['fname'] %>, <%= customers[j]['lname'] %></h3>
+              <h5>Comments</h5>
+              <p id="comment"><%= customers[j]['comment'] %></p>
+              <h5>Phone</h5>
+            </a>
+            <a href="tel:<%= customers[j]['phone'] %>"><p id="phone"><%= customers[j]['phone'] %></p></a>
+          </div>
+      <% } %>
+  </form>
+</body>
+</html>
