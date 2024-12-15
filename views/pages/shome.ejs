@@ -8,14 +8,21 @@
     <style>
        
        .fa-headset {
-        font-size: 40px;
-        position: absolute;
-        top: 10px; 
-        right: 10px; 
-        width: 40px; 
-        height: auto;
-        color: black;
-       }
+          font-size: 40px;
+          position: absolute;
+          top: 15px; 
+          right: 15px; 
+          width: 40px; 
+          height: auto;
+          color: black;
+        } 
+
+        .fa-arrow-right-from-bracket{
+          font-size: 30px;
+          margin-bottom: 10px;
+          color: black;
+
+        }
 
        .list-group {
             display: flex;
@@ -37,10 +44,17 @@
     </style>
 </head>
 <body>
-    <h1>Support</h1>
+    <h1></h1>
     <a href="http://localhost:1000/supportchat" class="button">
       <i class="fa-solid fa-headset"></i>
     </a>
-    
+    <a href="logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </a>
+    <form action="./deliveryroute" method="get" class="list-group">
+        <% for (let i=0; i<deliveries.length; i++){ %>
+            <a  href="./deliveryroute?id=<%= deliveries[i]['_id'] %>" type="submit"><p><%- deliveries[i] %></p></a> <!-- CHANGE THOSE LINES ONLY -->
+        <% } %>
+    </form> 
 </body>
 </html>

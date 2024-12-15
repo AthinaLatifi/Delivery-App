@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Route</title>
+</head>
+<body>
+    <h1><%- delivery['fname'] %> <%- delivery['lname'] %> </h1>
+    <ol type="1">
+        <% for (let i=0; i<customers.length;i++) {%>
+            <li><%= customers[i] %></li>
+        <% } %>
+    </ol>
+    <form action="./support">
+        <button>Back</button>
+    </form>
+    <form action="./addCustomers">
+        <button>Add Stops</button>
+    </form>
+</body>
+</html>

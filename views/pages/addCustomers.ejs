@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>addCustomers</title>
+</head>
+<body>
+    <h1>Hello My Friend</h1>
+    <form action="./addCustomers" method="post">
+        <input type="text" name="fname" placeholder="First Name" required>
+        <input type="text" name="lname" placeholder="Last Name"required>
+        <input type="text" name="address" placeholder="Address"required>
+        <input type="text" name="city" placeholder="City"required>
+        <input type="text" name="postal" placeholder="Postal"required>
+        <!-- packets-->
+        <input type="text" name="packetID" placeholder='Packets (for multiple packets please seperate them with commas ",")'required>
+        <!--TO BE CHANGED-->
+        <input type="text" name="floor" placeholder="Floor">
+        <input type="text" name="door" placeholder="Door">
+        <input type="text" name="comment" placeholder="Comment">
+        <input type="text" name="phone" placeholder="Phone"required>
+        <!-- <label for="dropdown">Delivery Man</label> -->
+        <select name="deliveryMail" required>
+            <option value="">Delivery Man</option>
+            <% for (let i =0; i<deliveries.length;i++){ %>
+            <option value="<%= deliveries[i]['email']%>"><%= deliveries[i]['email']%></option>
+            <% } %>
+        </select>
+        <!-- <input type="text" name="deliverymail" placeholder="Delivery Man"> -->
+        <button type="submit">Add</button>
+        <form action="./support">
+            <button>Cancel</button>
+        </form>
+    </form>
+</body>
+</html>

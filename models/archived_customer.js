@@ -12,6 +12,7 @@ var archived_customer = new mongoose.Schema({
     comment: String,
     phone: String,
     deliveryMail: String,
+    status: String
 }, {collection:"archive"});
 
 const Archived_customer = mongoose.model('Archived_customer', archived_customer);

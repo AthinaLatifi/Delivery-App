@@ -1,7 +1,9 @@
-const express = require('express')
+const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const session = require('express-session');
+const http = require('http');
+const { Server } = require('socket.io');
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine','ejs');
 app.use(express.json());
@@ -9,8 +11,32 @@ app.use(session({"secret":"1234567890"}));
 app.use(express.static('views'));
 
 
+ 
+const server = http.createServer(app); 
+const io = new Server(server, {
+    cors: {
+        origin: ["http://localhost:1000"]  ,
+        methods: ["GET", "POST"]
+    },
+    
+});
 
-let port = 1000;
+server.listen(1000, () => {
+    console.log("Server and Socket.IO are running on http://localhost:1000");
+});
+
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
+    socket.on('chat message', (msg) => {
+        console.log('Message received:', msg);
+        io.emit('chat message', msg); 
+    });
+    socket.on('disconnect', () => {
+        console.log('User disconnected:', socket.id);
+    });
+});
+
+
 
 let username = 'Athinalatifi';
 let password = 'athinalatifi';
@@ -21,7 +47,14 @@ let Customer = require("./models/customer");
 let Archived_customer = require('./models/archived_customer');
 
 mongoose.connect("mongodb+srv://"+username+":"+password+"@cluster0.1rslh5n.mongodb.net/"+db);
- 
+
+const crypto = require('crypto');
+function calculateHash(input) {
+    const hash = crypto.createHash('sha256');
+    hash.update(input);
+    return hash.digest('hex');
+}
+
 
 function GetRole(req){
     return req.session.role;
@@ -39,7 +72,7 @@ app.post('/', async (req, res) => {
     const user = await User.findOne({"email":req.body.email}).exec();         //.find({email:req.body.email}).exec();
 
     if (user!=null){
-        if(user.password==req.body.password){
+        if(user.password==calculateHash(req.body.password)){
             req.session.email= req.body.email;
             req.session.role= user.role; 
             if (user.role=='delivery'){
@@ -65,19 +98,19 @@ app.get('/delivery', async (req, res) => {
 
 
 
-app.get('/support', (req, res) => {
-    res.render('./pages/shome')
+app.get('/support', async (req, res) => {
+    const deliveries = await User.find({'role': 'delivery'}).exec();
+    res.render('./pages/shome', {'deliveries':deliveries});
 });
 
 app.get('/information', async (req, res) => {
     id = req.query['id'];
     const customer = await Customer.findOne({"_id":id}).exec();
-    res.render('./pages/cinfo', {'customer':customer})
+    res.render('./pages/cinfo', {'customer':customer});
 });
 
 app.post('/information', async (req, res) => {
     const customer = await Customer.findOneAndDelete({"_id":id}).exec();   
-    console.log(customer); 
     Archived_customer.create({
       _id:customer["_id"],
       fname:customer['fname'],
@@ -91,16 +124,17 @@ app.post('/information', async (req, res) => {
       comment:customer['comment'],
       phone:customer['phone'],
       deliveryMail:customer['deliveryMail'],
+      status:'delivered'
     });
     res.redirect('/delivery');
 });
 
 app.get('/supportchat', (req, res) => {
-    res.render('./pages/schat')
+    res.render('./pages/schat'); 
 });
 
 app.get('/delchat', (req, res) => {
-    res.render('./pages/delchat')
+    res.render('./pages/delchat');
 });
 
 app.get('/logout', (req, res) => {
@@ -108,6 +142,38 @@ app.get('/logout', (req, res) => {
     res.redirect("/");
 })
 
-app.listen(port , () => {
-    console.log("Server runs on port ", port);
+app.get('/deliveryroute', async (req, res) => {
+    id = req.query['id'];
+    const delivery = await User.findOne({'_id':id}).exec();
+    email = delivery['email'];
+    const customers = await Customer.find({'deliveryMail':email}).exec();
+    res.render('./pages/delroute', {"delivery": delivery, 'customers':customers});
 });
+
+app.get('/addCustomers', async (req, res) => {
+    let deliveries = await User.find({'role':'delivery'}).exec();
+    res.render('./pages/addCustomers', {'deliveries':deliveries});
+});
+
+app.post('/addCustomers', async (req, res) => {
+    let deliveries = await User.find({'role':'delivery'}).exec();
+
+    packets = req.body.packetID.split(',');
+    Customer.create({
+        fname:req.body['fname'],
+        lname:req.body['lname'],
+        address:req.body['address'],
+        city:req.body['city'],
+        postal:req.body['postal'],
+        packetID:packets,
+        floor:req.body['floor'],
+        door:req.body['door'],
+        comment:req.body['comment'],
+        phone:req.body['phone'],
+        deliveryMail:req.body['deliveryMail'],
+        status:'pending'
+    });
+    res.render('./pages/addCustomers',{'deliveries':deliveries});
+
+})
+

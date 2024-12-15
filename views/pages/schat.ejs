@@ -4,8 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Chat</title>
+    <style>
+        body {
+            background-color: #fafafa;
+            font-family: Arial, sans-serif;
+        }
+        #messages {
+            list-style-type: none;
+            padding: 10px;
+            max-height: 800px;
+            overflow-y: scroll;  
+            background-color: #ffffff;
+            margin-bottom: 70px;  
+            border-radius: 8px;
+            flex-grow: 1;
+        }
+
+        #send {
+            position: absolute;
+            bottom: 40px;
+            left: 80%;
+        }
+
+        .message-input-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f8f9fa;
+            position: absolute;
+            bottom: 20px;
+            margin-left: 15%;
+            width: 60%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+        }
+
+        .message {
+            background-color: #c6d1f7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .support-label {
+            font-weight: bold;
+            color: #270733   ;  
+            margin-right: 10px;
+        }
+
+        .delivery-label {
+            font-weight: bold;
+            color: #9b59b6   ;  
+            margin-right: 10px;
+        }
+      
+        .message-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-primary {
+            background-color: #a0b4fc;
+            color: black;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Chat</h1>
+    <ul id="messages"></ul>
+    <form id="send-container">
+        <button type="submit" class="btn btn-primary" id="send">Send</button>
+         <div class="message-input-container"> 
+           <input class="message-input" id="message" placeholder="Type a message...">
+         </div>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io('http://localhost:1000');
+
+        
+        document.getElementById('send-container').addEventListener('submit', (e) => {
+            e.preventDefault();  
+            const messageInput = document.getElementById('message');  
+            const message = messageInput.value;  
+            if (message.trim() !== '') {
+                socket.emit('chat message', { sender: 'support', message: message }); 
+                messageInput.value = ''; 
+            }
+        });
+
+        
+        socket.on('chat message', (data) => {
+            const messageContainer = document.getElementById('messages');
+            const newMessageContainer = document.createElement('li');
+            newMessageContainer.classList.add('message-container');
+
+            const label = document.createElement('span');
+            if (data.sender === 'support') {
+                label.classList.add('support-label');
+                label.textContent = 'Support:';
+            } else {
+                label.classList.add('delivery-label');
+                label.textContent = 'Delivery:';
+            }
+            
+            const messageBox = document.createElement('div');
+            messageBox.classList.add('message');
+            messageBox.textContent = data.message;
+
+            newMessageContainer.appendChild(label);
+            newMessageContainer.appendChild(messageBox);
+
+            messageContainer.appendChild(newMessageContainer);
+        });
+    </script>  
 </body>
 </html>

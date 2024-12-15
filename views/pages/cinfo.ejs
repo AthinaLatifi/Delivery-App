@@ -3,25 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cinfo</title>
+    <title>Customer Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-left: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
         .oneline{
             display:inline-block;
+        }
+        span {
+         margin-right: 5px; /* Adds space between first and last name */
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Space between the buttons */
+            align-items: center;
+            padding: 10px 20px; /* Space from the sides */
+            position: absolute;
+            bottom: 10px; 
+            width: 95%; /* Ensures it spans the entire width */
+            box-sizing: border-box;
+        }
+
+        .button-container form {
+            margin: 0 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #delivered {
+            background-color: rgb(194, 33, 33);
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px; /* Space between rows */
+        }
+        .info-row i {
+            margin-right: 8px; /* Space between the icon and text */
+            font-size: 25px; /* Adjust icon size */
+        }
+        .info-row p {
+          font-size: 20px;
+          margin: 5px;/* Remove default margins on paragraphs */
         }
     </style>
 </head>
 <body>
     <h1>Information</h1>
-    <p><%= customer %></p>
-    <h1><%= customer['fname'] %></h1>
-    <form action="./delchat" class="button oneline">
-        <button>Help</button>
-    </form>
-    <form action="./information" method="post" class="button oneline" >
-        <button>Delivered</button>
-    </form>
-    <form action="./delivery">
-        <button>Back</button>
-    </form>
+    <div class="button-container">
+        <form action="./delchat" class="button" id="help">
+            <button>Help</button>
+        </form>
+        <form action="./information" method="post" class="button" id="delivered">
+            <button>Delivered</button>
+        </form>
+        <form action="./delivery" id="back">
+            <button>Back</button>
+        </form>
+    </div>
+        <h1><span><%= customer['fname'] %></span> <span><%= customer['lname'] %></span>
+        </h1>
+            <h3><span><%= customer['address'] %>, <%= customer['city'] %></span></h3>
+            <h3><%= customer['postal'] %></h3>
+            <div class="info-row">
+                <i class="fa-solid fa-door-open"></i>
+              <p><strong>Door Code:</strong> <%= customer['door'] %></p>
+            </div>
+            
+            <div class="info-row">
+                <i class="fa-solid fa-stairs"></i>
+             <p><strong>Floor No:</strong> <%= customer['floor'] %></p>
+            </div>
+            
+            <div class="info-row">
+              <p><strong>Instructions:</strong> <%= customer['comment'] %></p>
+            </div>
+            
+            <div class="info-row">
+                <i class="fa-solid fa-box"></i>
+             <p><strong>Packets:</strong> <%= customer['packetID'] %></p>
+            </div>
 </body>
 </html>

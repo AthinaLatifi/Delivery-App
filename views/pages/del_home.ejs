@@ -13,17 +13,24 @@
         .fa-headset {
           font-size: 40px;
           position: absolute;
-          top: 10px; 
-          right: 10px; 
+          top: 15px; 
+          right: 15px; 
           width: 40px; 
           height: auto;
           color: black;
         } 
+
+        .fa-arrow-right-from-bracket{
+          font-size: 30px;
+          margin-bottom: 10px;
+          color: black;
+
+        }
        
         .list-group {
             display: flex;
             flex-direction: column; 
-            width: 100%; 
+            width: 98%; 
             
         }
        
@@ -38,29 +45,32 @@
             cursor: pointer;
             background-color: #fff;
             border-radius: 8px;
+            
         }
+
+
         
     </style>
 </head>
 <body>
-    <h1  style="color: red;">Delivery</h1>
+    <h1  style="color: red;"></h1>
     <a href="http://localhost:1000/delchat" class="button">
         <i class="fa-solid fa-headset"></i>
     </a>
     <a href="logout">
-        Logout
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
     </a>
     <form action="./information" class="list-group" method="get">
       <% for (j=0; j<customers.length; j++) {%>
           <div class="list-group-item list-group-item-action">
             <a  href="./information?id=<%= customers[j]['_id'] %>" type="submit">
-              <h1>Address:</h1>
-              <h2><%= customers[j]['address'] %> , <%= customers[j]['city'] %> <%= customers[j]['postal'] %></h2>
-              <h3>Name:</h3>
-              <h3 id="name"><%= customers[j]['fname'] %>, <%= customers[j]['lname'] %></h3>
-              <h5>Comments</h5>
+              <h1 style="color: black;">Address:</h1>
+              <h2 style="color: black;" id="address"><%= customers[j]['address'] %> , <%= customers[j]['city'] %> <%= customers[j]['postal'] %></h2>
+              <h3 style="color: black;">Name:</h3>
+              <h3 style="color: black;" id="name"><%= customers[j]['fname'] %>, <%= customers[j]['lname'] %></h3>
+              <h5 style="color: black;">Comments</h5>
               <p id="comment"><%= customers[j]['comment'] %></p>
-              <h5>Phone</h5>
+              <h5 style="color: black;">Phone</h5>
             </a>
             <a href="tel:<%= customers[j]['phone'] %>"><p id="phone"><%= customers[j]['phone'] %></p></a>
           </div>

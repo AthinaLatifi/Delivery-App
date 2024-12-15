@@ -12,6 +12,7 @@ var customer = new mongoose.Schema({
     comment: String,
     phone: String,
     deliveryMail: String,
+    status: String 
 }, {collection:"costumers"});
 
 const Customer = mongoose.model('Customer', customer);
