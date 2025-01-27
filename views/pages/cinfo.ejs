@@ -17,16 +17,16 @@
             display:inline-block;
         }
         span {
-         margin-right: 5px; /* Adds space between first and last name */
+         margin-right: 5px; 
         }
         .button-container {
             display: flex;
-            justify-content: space-between; /* Space between the buttons */
+            justify-content: space-between; 
             align-items: center;
-            padding: 10px 20px; /* Space from the sides */
+            padding: 10px 20px; 
             position: absolute;
             bottom: 10px; 
-            width: 95%; /* Ensures it spans the entire width */
+            width: 95%; 
             box-sizing: border-box;
         }
 
@@ -38,6 +38,7 @@
             padding: 10px 15px;
             font-size: 16px;
             cursor: pointer;
+            background-color: #a0b4fc;
         }
 
         #delivered {
@@ -46,25 +47,26 @@
         .info-row {
             display: flex;
             align-items: center;
-            margin-bottom: 20px; /* Space between rows */
+            margin-bottom: 20px; 
         }
         .info-row i {
-            margin-right: 8px; /* Space between the icon and text */
-            font-size: 25px; /* Adjust icon size */
+            margin-right: 8px; 
+            font-size: 25px; 
         }
         .info-row p {
           font-size: 20px;
-          margin: 5px;/* Remove default margins on paragraphs */
+          margin: 10px;
         }
+
     </style>
 </head>
-<body>
+<body>  <!-- Printing all the costumer info from the database -->
     <h1>Information</h1>
     <div class="button-container">
-        <form action="./delchat" class="button" id="help">
+        <form action="./delhelp" method='post' class="button" id="help">
             <button>Help</button>
         </form>
-        <form action="./information" method="post" class="button" id="delivered">
+        <form action="./delivered" method="post" class="button" id="delivered">
             <button>Delivered</button>
         </form>
         <form action="./delivery" id="back">

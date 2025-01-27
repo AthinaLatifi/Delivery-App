@@ -88,7 +88,8 @@
          <input class="message-input" id="message" placeholder="Type a message...">
        </div>
     </form>
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <!-- Popup message -->
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"> 
         <div class="toast-header">
           <strong class="me-auto">Support</strong>
           <small>now</small>
@@ -97,7 +98,8 @@
         <div class="toast-body">
           Pesponse time 5-10 minutes!!
         </div>
-      </div>
+    </div>
+</body>
     <script>
         function showToast() {
 
@@ -115,7 +117,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io('http://localhost:1000');
+        // Live chat
+        const socket = io('http://localhost:' + <%= port%>);
 
         
         document.getElementById('send-container').addEventListener('submit', (e) => {
@@ -123,7 +126,7 @@
             const messageInput = document.getElementById('message'); 
             const message = messageInput.value;  
             if (message.trim() !== '') {
-                socket.emit('chat message', { sender: 'delivery', message: message }); 
+                socket.emit('chat message', { sender: 'delivery', message: message });
                 messageInput.value = ''; 
             }
         });
@@ -138,7 +141,7 @@
             const label = document.createElement('span');
             if (data.sender === 'delivery') {
                 label.classList.add('delivery-label');
-                label.textContent = 'Delivery:';
+                label.textContent = 'You:';
             } else {
                 label.classList.add('support-label');
                 label.textContent = 'Support:';

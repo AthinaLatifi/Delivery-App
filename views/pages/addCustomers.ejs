@@ -4,34 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>addCustomers</title>
+    <style>
+
+        body{
+          background-color: #a0b4fc;
+        }
+ 
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box; 
+            font-size: 16px;
+        }
+
+        #add_button, #cancel_button {
+            padding: 12px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            
+        }
+
+        #add_button{
+            background-color: #a0b4fc;
+        }
+        #cancel_button{
+            background-color: #f44336;
+        }
+
+        #box {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        
+        
+        h1 {
+            text-align: center;
+        }
+
+        
+    </style>
+
 </head>
 <body>
-    <h1>Hello My Friend</h1>
-    <form action="./addCustomers" method="post">
-        <input type="text" name="fname" placeholder="First Name" required>
-        <input type="text" name="lname" placeholder="Last Name"required>
-        <input type="text" name="address" placeholder="Address"required>
-        <input type="text" name="city" placeholder="City"required>
-        <input type="text" name="postal" placeholder="Postal"required>
-        <!-- packets-->
-        <input type="text" name="packetID" placeholder='Packets (for multiple packets please seperate them with commas ",")'required>
-        <!--TO BE CHANGED-->
-        <input type="text" name="floor" placeholder="Floor">
-        <input type="text" name="door" placeholder="Door">
-        <input type="text" name="comment" placeholder="Comment">
-        <input type="text" name="phone" placeholder="Phone"required>
-        <!-- <label for="dropdown">Delivery Man</label> -->
-        <select name="deliveryMail" required>
-            <option value="">Delivery Man</option>
-            <% for (let i =0; i<deliveries.length;i++){ %>
-            <option value="<%= deliveries[i]['email']%>"><%= deliveries[i]['email']%></option>
-            <% } %>
-        </select>
-        <!-- <input type="text" name="deliverymail" placeholder="Delivery Man"> -->
-        <button type="submit">Add</button>
-        <form action="./support">
-            <button>Cancel</button>
+    <h1>Here You Can Add Stops!</h1>
+    <div id="box">
+        <!-- For to add new Costumer -->
+        <form action="./addCustomers" method="post" id="add-form">
+            <input type="text" name="fname" placeholder="First Name" required>
+            <input type="text" name="lname" placeholder="Last Name"required>
+            <input type="text" name="address" placeholder="Address"required>
+            <input type="text" name="city" placeholder="City"required>
+            <input type="text" name="postal" placeholder="Postal"required>
+            <input type="text" name="packetID" placeholder='Packets (for multiple packets please seperate them with commas ",")'required>
+            <input type="text" name="floor" placeholder="Floor">
+            <input type="text" name="door" placeholder="Door">
+            <input type="text" name="comment" placeholder="Comment">
+            <input type="text" name="phone" placeholder="Phone"required>
+            <select name="deliveryMail" required>
+                <option value="">Delivery Man</option>
+                <% for (let i =0; i<deliveries.length;i++){ %>
+                <option value="<%= deliveries[i]['email']%>"><%= deliveries[i]['email']%></option>
+                <% } %>
+            </select>
+            <button type="submit" id="add_button">Add</button>
         </form>
-    </form>
+        <form action="./support"  id="cancel">
+            <button id="cancel_button">Cancel</button>
+        </form>
+    </div>
 </body>
 </html>

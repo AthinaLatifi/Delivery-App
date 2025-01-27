@@ -4,19 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Route</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        
+        body{
+          background-color: #a0b4fc;
+        }
+
+        ol {
+            padding: 0px; 
+        }
+
+        li {
+            border: 1px solid #ccc; /* adding a border to create the box */
+            padding: 15px; /*space inside box */
+            margin: 10px ; /* Space between the boxes */
+            border-radius: 8px; 
+            background-color: #ffffff; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
+     
+        .top-buttons {
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            display: flex; 
+            gap: 10px; 
+        }
+
+        .top-buttons button {
+            background-color: #ffffff; 
+            color: black; 
+            padding: 10px 15px; 
+            border-radius: 5px; 
+            font-weight: bold; 
+        }
+        
+        #delete{
+            padding: 10px; 
+            font-size: 15px; 
+        }
+    </style>
+
+
 </head>
 <body>
-    <h1><%- delivery['fname'] %> <%- delivery['lname'] %> </h1>
-    <ol type="1">
-        <% for (let i=0; i<customers.length;i++) {%>
-            <li><%= customers[i] %></li>
-        <% } %>
-    </ol>
-    <form action="./support">
-        <button>Back</button>
-    </form>
-    <form action="./addCustomers">
-        <button>Add Stops</button>
-    </form>
+    <h1><%= delivery['fname'] %> <%= delivery['lname'] %> </h1>
+        <ol type="1"> <!-- Printing the stops/costumers a specific delivery has. -->
+            <% for (let i=0; i<customers.length;i++) {%>
+                <li>
+                    <div>
+                        <h2 style="color: black;" id="name">Name: <%= customers[i]['fname'] %> <%= customers[i]['lname'] %></h2>
+                        <h2 style="color: black;" id="address">Address: <%= customers[i]['address'] %> , <%= customers[i]['city'] %> <%= customers[i]['postal'] %></h2>
+                        <h2 style="color: black;">Phone: <%= customers[i]['phone'] %></h2>
+                    </div>
+                    <form action="./delete" method="post">
+                        <button name="customer" value="<%= customers[i]._id %>">
+                        <i class="fa-regular fa-trash-can" id="delete"></i>
+                        </button>
+                    </form>
+                </li> 
+            <% } %>
+        </ol>
+      <div class="top-buttons">
+        <form action="./support" id="button">
+            <button>Back</button>
+        </form>
+        <form action="./addCustomers" id="button">
+            <button>Add Stops</button>
+        </form>
+      </div>   
 </body>
 </html>

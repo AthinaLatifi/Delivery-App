@@ -6,7 +6,10 @@
     <title>shome</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-       
+
+        body{
+          background-color: #a0b4fc;
+        }
        .fa-headset {
           font-size: 40px;
           position: absolute;
@@ -25,22 +28,34 @@
         }
 
        .list-group {
-            display: flex;
-            flex-direction: column; 
-            width: 100%; 
+          display: flex;
+          flex-direction: column; 
+          width: 100%; 
             
         }
        
         .list-group-item {
-            display: block;
-            width: 100%; 
-            margin-bottom: 5px; 
-            padding: 40px 10px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #ffedf2;
+          display: block;
+          width: 100%; 
+          margin-bottom: 5px; 
+          padding: 40px 10px;
+          font-size: 18px;
+          cursor: pointer;
+          background-color: #ffedf2;
         }
-
+        
+        .delivery-list{
+          margin-top: 10px;
+          display: block;
+          width: 100%; 
+          padding: 40px 10px;
+          font-size: 18px;
+          text-align: center; 
+          padding-left: 15px;
+          cursor: pointer;
+          background-color: #fff;
+          border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -51,9 +66,15 @@
     <a href="logout">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </a>
+      <!-- Printing the Delivery workers -->
     <form action="./deliveryroute" method="get" class="list-group">
         <% for (let i=0; i<deliveries.length; i++){ %>
-            <a  href="./deliveryroute?id=<%= deliveries[i]['_id'] %>" type="submit"><p><%- deliveries[i] %></p></a> <!-- CHANGE THOSE LINES ONLY -->
+          <div class="delivery-list">
+            <a  href="./deliveryroute?id=<%= deliveries[i]['_id'] %>" type="submit">
+              <h2 style="color: black;" id="name"><%= deliveries[i]['fname'] %>  <%= deliveries[i]['lname'] %></h2>
+              <h3 style="color: black;" id="email"><%= deliveries[i]['email'] %></h3>
+            </a> 
+          </div> 
         <% } %>
     </form> 
 </body>

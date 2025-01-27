@@ -9,20 +9,20 @@ app.set('view engine','ejs');
 app.use(express.json());
 app.use(session({"secret":"1234567890"}));
 app.use(express.static('views'));
-
+const _Port = 1000;
 
  
-const server = http.createServer(app); 
+const server = http.createServer(app); //Sockets for Live chat.
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:1000"]  ,
+        origin: ["http://localhost:"+_Port]  ,
         methods: ["GET", "POST"]
     },
     
 });
 
-server.listen(1000, () => {
-    console.log("Server and Socket.IO are running on http://localhost:1000");
+server.listen(_Port, () => {
+    console.log("Server and Socket.IO are running on http://localhost:"+_Port);
 });
 
 io.on('connection', (socket) => {
@@ -71,6 +71,7 @@ app.get('/', (req, res) => {
 app.post('/', async (req, res) => {
     const user = await User.findOne({"email":req.body.email}).exec();         //.find({email:req.body.email}).exec();
 
+    //Verifying user existence.
     if (user!=null){
         if(user.password==calculateHash(req.body.password)){
             req.session.email= req.body.email;
@@ -83,7 +84,7 @@ app.post('/', async (req, res) => {
             }
         }
         else{
-            res.redirect("/")// wrong password           we need to add an alert to this error 
+            res.redirect("/")// wrong password           
         }
     }
     else{
@@ -96,8 +97,6 @@ app.get('/delivery', async (req, res) => {
     res.render('./pages/del_home', {'role': GetRole(req), 'deliveryMail':Getemail(req), 'customers':customers});
 });
 
-
-
 app.get('/support', async (req, res) => {
     const deliveries = await User.find({'role': 'delivery'}).exec();
     res.render('./pages/shome', {'deliveries':deliveries});
@@ -106,12 +105,12 @@ app.get('/support', async (req, res) => {
 app.get('/information', async (req, res) => {
     id = req.query['id'];
     const customer = await Customer.findOne({"_id":id}).exec();
-    res.render('./pages/cinfo', {'customer':customer});
+    res.render('./pages/cinfo', {'customer':customer, 'id' : id});
 });
 
-app.post('/information', async (req, res) => {
+app.post('/delivered', async (req, res) => {
     const customer = await Customer.findOneAndDelete({"_id":id}).exec();   
-    Archived_customer.create({
+    Archived_customer.create({  // Marks customer parcels as delivered.
       _id:customer["_id"],
       fname:customer['fname'],
       lname:customer['lname'],
@@ -129,12 +128,21 @@ app.post('/information', async (req, res) => {
     res.redirect('/delivery');
 });
 
+app.post('/delhelp', async (req, res) => {
+    try {
+        const customer = await Customer.findOne({"_id":id}).exec();
+        res.render('./pages/delchat', {'port':_Port, 'deliveryMail' : customer.deliveryMail, 'customer': customer})
+    } catch {
+        res.redirect('/');
+    }
+});
+
 app.get('/supportchat', (req, res) => {
-    res.render('./pages/schat'); 
+    res.render('./pages/schat', {'port': _Port}); 
 });
 
 app.get('/delchat', (req, res) => {
-    res.render('./pages/delchat');
+    res.render('./pages/delchat', {'port':_Port}); 
 });
 
 app.get('/logout', (req, res) => {
@@ -159,7 +167,7 @@ app.post('/addCustomers', async (req, res) => {
     let deliveries = await User.find({'role':'delivery'}).exec();
 
     packets = req.body.packetID.split(',');
-    Customer.create({
+    Customer.create({  // Adding new costumer to a delivery person.
         fname:req.body['fname'],
         lname:req.body['lname'],
         address:req.body['address'],
@@ -177,3 +185,23 @@ app.post('/addCustomers', async (req, res) => {
 
 })
 
+app.post('/delete', async (req, res) =>{
+    const customer = await Customer.findOneAndDelete({"_id":req.body['customer']}).exec();   
+    Archived_customer.create({ // Deleting a costumer.
+      _id:customer["_id"],
+      fname:customer['fname'],
+      lname:customer['lname'],
+      address:customer['address'],
+      city:customer['city'],
+      postal:customer['postal'],
+      packetID:customer['packetID'],
+      floor:customer['floor'],
+      door:customer['door'],
+      comment:customer['comment'],
+      phone:customer['phone'],
+      deliveryMail:customer['deliveryMail'],
+      status:'NOT delivered'
+    });
+    const deliveries = await User.find({'role': 'delivery'}).exec();
+    res.render('./pages/shome', {'deliveries':deliveries});
+});
