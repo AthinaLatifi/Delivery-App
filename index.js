@@ -9,7 +9,7 @@ app.set('view engine','ejs');
 app.use(express.json());
 app.use(session({"secret":"1234567890"}));
 app.use(express.static('views'));
-const _Port = 1000;
+const _Port = process.env.PORT;
 
  
 const server = http.createServer(app); //Sockets for Live chat.
@@ -38,9 +38,9 @@ io.on('connection', (socket) => {
 
 
 
-let username = 'Athinalatifi';
-let password = 'athinalatifi';
-let db = "del"; 
+let username = process.env.USERNAME;
+let password = process.env.PASSWORD;
+let db = process.env.DB; 
 
 let User= require("./models/user");
 let Customer = require("./models/customer");
