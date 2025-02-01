@@ -52,6 +52,7 @@ Create the following collections in your database:
 
 1. **User  Collection (users)**
    {
+   
        "fname": String,  // First name
    
        "lname": String,  // Last name
@@ -64,6 +65,7 @@ Create the following collections in your database:
    }
 3. **Costumer  Collection (costumer)**
 {
+
     "id": String,  // Customer ID
    
     "fname": String,  // First name
@@ -89,10 +91,12 @@ Create the following collections in your database:
     "deliveryMail": String,  // Delivery email
    
     "status": String  // Delivery status
+   
 }
 
 5. **Archived Customer Collection (archive)**
 {
+
     "_id": String,  // Archived customer ID
    
     "fname": String,  // First name
@@ -116,8 +120,9 @@ Create the following collections in your database:
     "phone": String,  // Phone number
    
     "deliveryMail": String,  // Delivery email
-   
+
     "status": String  // Delivery status
+   
 }
 
 # Run the application
