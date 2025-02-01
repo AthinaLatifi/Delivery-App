@@ -16,11 +16,11 @@ git clone https://github.com/AthinaLatifi/Delivery-App.git
 
 cd Delivery-App
 
-3.  Install dependencies:
+2.  Install dependencies:
 
 npm install
 
-5.	Set up your .env file:
+3.	Set up your .env file:
 o	Create a .env file in the root directory of the project.
 
 o	Add the environment variables from the file .env.sample
