@@ -18,9 +18,9 @@ o	Add the environment variables from the file .env.sample
 o	Replace your_database_name, your_mongodb_username, and your_mongodb_password with your MongoDB credentials.
 
 #	Set up your MongoDB database:
-o	If using MongoDB Atlas, create a cluster and get the connection string.
-o	If using a local MongoDB instance, ensure the server is running.
-o	Create the following collections in your database:
+**If using MongoDB Atlas, create a cluster and get the connection string.
+**If using a local MongoDB instance, ensure the server is running.
+**Create the following collections in your database:
 users
 costumers
 archive
