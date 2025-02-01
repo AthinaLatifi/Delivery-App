@@ -25,46 +25,53 @@ users
 costumers
 archive
 
-#Database Schema
-1. User Collection (users)
+## Database Setup
+
+If using MongoDB Atlas, create a cluster and get the connection string.  
+**If using a local MongoDB instance, ensure the server is running.**  
+Create the following collections in your database:
+
+### Collections
+
+1. **User  Collection (users)**
+   {
+       "fname": String,  // First name
+       "lname": String,  // Last name
+       "email": String,  // Email address
+       "password": String,  // Password (should be hashed)
+       "role": String  // User role (e.g., admin, user)
+   }
+2. **Costumer  Collection (costumer)**
 {
-  fname: String,       // First name
-  lname: String,       // Last name
-  email: String,       // Email address
-  password: String,    // Password (should be hashed)
-  role: String         // User role (e.g., admin, user)
+    "id": String,  // Customer ID
+    "fname": String,  // First name
+    "lname": String,  // Last name
+    "address": String,  // Address
+    "city": String,  // City
+    "postal": String,  // Postal code
+    "packetID": Array,  // Array of packet IDs
+    "floor": String,  // Floor number
+    "door": String,  // Door number
+    "comment": String,  // Additional comments
+    "phone": String,  // Phone number
+    "deliveryMail": String,  // Delivery email
+    "status": String  // Delivery status
 }
-2. Customer Collection (costumers)
+3. **Archived Customer Collection (archive)**
 {
-  id: String,          // Customer ID
-  fname: String,       // First name
-  lname: String,       // Last name
-  address: String,     // Address
-  city: String,        // City
-  postal: String,      // Postal code
-  packetID: Array,     // Array of packet IDs
-  floor: String,       // Floor number
-  door: String,        // Door number
-  comment: String,     // Additional comments
-  phone: String,       // Phone number
-  deliveryMail: String, // Delivery email
-  status: String       // Delivery status
-}
-3. Archived Customer Collection (archive)
-{
-  _id: String,         // Archived customer ID
-  fname: String,       // First name
-  lname: String,       // Last name
-  address: String,     // Address
-  city: String,        // City
-  postal: String,      // Postal code
-  packetID: Array,     // Array of packet IDs
-  floor: String,       // Floor number
-  door: String,        // Door number
-  comment: String,     // Additional comments
-  phone: String,       // Phone number
-  deliveryMail: String, // Delivery email
-  status: String       // Delivery status
+    "_id": String,  // Archived customer ID
+    "fname": String,  // First name
+    "lname": String,  // Last name
+    "address": String,  // Address
+    "city": String,  // City
+    "postal": String,  // Postal code
+    "packetID": Array,  // Array of packet IDs
+    "floor": String,  // Floor number
+    "door": String,  // Door number
+    "comment": String,  // Additional comments
+    "phone": String,  // Phone number
+    "deliveryMail": String,  // Delivery email
+    "status": String  // Delivery status
 }
 
 # Run the application
