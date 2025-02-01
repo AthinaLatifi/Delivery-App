@@ -19,16 +19,18 @@ o	Replace your_database_name, your_mongodb_username, and your_mongodb_password w
 
 #	Set up your MongoDB database:
 If using MongoDB Atlas, create a cluster and get the connection string.
-o If using a local MongoDB instance, ensure the server is running.
-o Create the following collections in your database:
+If using a local MongoDB instance, ensure the server is running.
+Create the following collections in your database:
 users
 costumers
 archive
 
 ## Database Setup
 
-If using MongoDB Atlas, create a cluster and get the connection string.  
-**If using a local MongoDB instance, ensure the server is running.**  
+If using **MongoDB Atlas**, create a cluster and get the connection string.  
+
+If using a **local MongoDB instance**, ensure the server is running.  
+
 Create the following collections in your database:
 
 ### Collections
